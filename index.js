@@ -96,7 +96,7 @@ async function connect() {
 }
 
 async function setBasicInfo() {
-    address = [await unisat.getAccounts()];
+    address = await unisat.getAccounts()[0];
     balance = await unisat.getBalance();
     network = await unisat.getNetwork();
     setUI();
