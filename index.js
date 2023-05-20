@@ -42,7 +42,7 @@ async function loadUnisat() {
         setBasicInfo();
         setTimeout(function () {
             setBasicInfo();
-        }, 3000);
+        }, 3);
         init();
     } else {
         provider = false;
