@@ -38,6 +38,10 @@ async function loadUnisat() {
         provider = true;
         unisat = window.unisat;
         console.log("unisat", unisat);
+        setBasicInfo();
+        setTimeout(function () {
+            setBasicInfo();
+        }, 3000);
         init();
     } else {
         provider = false;
@@ -108,10 +112,6 @@ function setUI() {
 
 window.addEventListener("load", function () {
     loadUnisat();
-    setBasicInfo();
-    setTimeout(function () {
-        setBasicInfo();
-    }, 3000);
 });
 
 function shortedAddress(fullStr) {
