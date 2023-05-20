@@ -1,43 +1,126 @@
+var provider;
 var unisat;
-var currentAddr;
+var accounts;
+var address;
 var balance;
+var connected;
+var unisatInstalled;
+var network = "livenet";
 
-async function loadunisat() {
-    console.log(window)
+function clickConnectButton() {
+    if (provider == false) {
+        window.location.href("https://rabet.vercel.app");
+    }
+    if (network == "testnet") {
+        changeNetwork();
+        return;
+    }
+    if (!connected) {
+        connect();
+        return;
+    }
+}
+
+const connectButton = document.getElementById("connect-wallet");
+
+connectButton.addEventListener("click", function () {
+    clickConnectButton();
+});
+
+const connectButton1 = document.getElementById("connect-wallet-1");
+
+connectButton1.addEventListener("click", function () {
+    clickConnectButton();
+});
+
+async function loadUnisat() {
     if (window.unisat) {
+        provider = true;
         unisat = window.unisat;
         console.log("unisat", unisat);
+        init();
     } else {
+        provider = false;
         console.log("No provider");
     }
 }
 
-function refreshData() {
-    console.log("Refreshing data...");
+function init() {
+    unisat.getAccounts().then(function (accounts) {
+        handleAccountsChanged(accounts);
+    });
+    unisat.on("accountsChanged", handleAccountsChanged);
+    unisat.on("networkChanged", handleNetworkChanged);
+    return () => {
+        unisat.removeListener("accountsChanged", handleAccountsChanged);
+        unisat.removeListener("networkChanged", handleNetworkChanged);
+    };
+}
+
+function handleAccountsChanged(_accounts) {
+    if (accounts[0] === _accounts[0]) {
+        return;
+    }
+    accounts = _accounts;
+    if (_accounts.length > 0) {
+        connected = true;
+        address = _accounts[0];
+        setBasicInfo();
+    } else {
+        connected = false;
+    }
+}
+
+function handleNetworkChanged() {
+    changeNetwork();
+    setBasicInfo();
+}
+
+async function changeNetwork() {
+    network = await unisat.switchNetwork("livenet");
 }
 
 async function connect() {
-    console.log("Connecting...");
     const result = await unisat.requestAccounts();
+    handleAccountsChanged(result);
 }
 
-async function getBasicInfo() {
-    currentAddr = await unisat.getAccounts();
+async function setBasicInfo() {
+    address = [await unisat.getAccounts()];
     balance = await unisat.getBalance();
+    network = await unisat.getNetwork();
+}
+
+function setUI() {
+    if (!provider) {
+        connectButton.value = "No Unisat";
+    } else if (!connected) {
+        connectButton.value = "Connect";
+    } else {
+        connectButton.value = shortedAddress(address);
+    }
 }
 
 window.addEventListener("load", function () {
-    loadunisat();
+    loadUnisat();
+    setBasicInfo();
+    setTimeout(function () {
+        setBasicInfo();
+    }, 3000);
 });
 
-const connectButton = document.getElementById('connect-wallet');
+function shortedAddress(fullStr) {
+    const strLen = 30
+    const separator = '...'
 
-connectButton.addEventListener('click', function () {
-    connect()
-})
+    if (fullStr?.length <= strLen) return fullStr
 
-const connectButton1 = document.getElementById('connect-wallet-1');
+    const sepLen = separator.length
+    const charsToShow = strLen - sepLen
+    const frontChars = Math.ceil(charsToShow / 3)
+    const backChars = Math.floor(charsToShow / 3)
 
-connectButton1.addEventListener('click', function () {
-    connect()
-})
+    return (
+        fullStr?.substr(0, frontChars) + separator + fullStr?.substr(fullStr?.length - backChars)
+    )
+}
