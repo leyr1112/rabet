@@ -47,6 +47,7 @@ async function loadUnisat() {
         provider = false;
         console.log("No provider");
     }
+    setUI()
 }
 
 function init() {
@@ -103,10 +104,13 @@ async function setBasicInfo() {
 function setUI() {
     if (!provider) {
         connectButton.innerText = "No Unisat";
+        return;
     } else if (!connected) {
         connectButton.innerText = "Connect";
+        return;
     } else {
         connectButton.innerText = shortedAddress(address);
+        return;
     }
 }
 
