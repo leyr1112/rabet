@@ -83,6 +83,7 @@ async function changeNetwork() {
 
 async function connect() {
     const result = await unisat.requestAccounts();
+    console.log('connect() result', result)
     handleAccountsChanged(result);
 }
 
