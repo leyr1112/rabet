@@ -93,6 +93,7 @@ async function setBasicInfo() {
     address = [await unisat.getAccounts()];
     balance = await unisat.getBalance();
     network = await unisat.getNetwork();
+    setUI();
 }
 
 function setUI() {
