@@ -36,6 +36,14 @@ connectButton1.addEventListener("click", function () {
     clickConnectButton();
 });
 
+const input = document.getElementById('input-satoshi')
+
+const sendButton = document.getElementById('send-satoshi');
+
+sendButton.addEventListener("click", function () {
+    setnSatoshis();
+});
+
 async function loadUnisat() {
     if (window.unisat) {
         provider = true;
@@ -111,12 +119,19 @@ async function setBasicInfo() {
 function setUI() {
     if (!provider) {
         connectButton.innerText = "No Unisat";
+        connectButton1.innerText = 'Referesh';
+        input.style.display = 'none'
         return;
     } else if (!connected) {
         connectButton.innerText = "Connect";
+        connectButton1.style.display = 'block';
+        connectButton1.innerText = "Connect";
+        input.style.display = 'none'
         return;
     } else {
         connectButton.innerText = shortedAddress(address);
+        connectButton1.style.display = 'none';
+        input.style.display = 'block'
         return;
     }
 }
@@ -141,7 +156,6 @@ function shortedAddress(fullStr = '') {
 }
 
 async function setnSatoshis() {
-    const input = document.getElementById('input-satoshi')
     const value = input.value;
     try {
         const txid = await unisat.sendBitcoin(
