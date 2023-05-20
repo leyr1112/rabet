@@ -39,8 +39,7 @@ async function loadUnisat() {
         provider = true;
         unisat = window.unisat;
         console.log("unisat", unisat);
-        setBasicInfo();
-        setTimeout(controlLoop, 3000);
+        controlLoop();
         init();
     } else {
         provider = false;
@@ -50,7 +49,8 @@ async function loadUnisat() {
 }
 
 function controlLoop() {
-    setTimeout(setBasicInfo, 3000);
+    setBasicInfo();
+    setTimeout(controlLoop, 3000);
 }
 
 function init() {
