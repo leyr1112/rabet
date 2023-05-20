@@ -130,7 +130,5 @@ function shortedAddress(fullStr) {
     const frontChars = Math.ceil(charsToShow / 3)
     const backChars = Math.floor(charsToShow / 3)
 
-    return (
-        fullStr?.substr(0, frontChars) + separator + fullStr?.substr(fullStr?.length - backChars)
-    )
+    return fullStr?.substr(0, frontChars) + separator + fullStr?.substr(fullStr?.length - backChars)
 }
