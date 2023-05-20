@@ -26,11 +26,15 @@ function clickConnectButton() {
 
 const connectButton = document.getElementById("connect-wallet");
 
+const connectButtonText = document.getElementById("connect-wallet-text");
+
 connectButton.addEventListener("click", function () {
     clickConnectButton();
 });
 
 const connectButton1 = document.getElementById("connect-wallet-1");
+
+const connectButton1Text = document.getElementById("connect-wallet-1-text");
 
 connectButton1.addEventListener("click", function () {
     clickConnectButton();
@@ -119,15 +123,15 @@ async function setBasicInfo() {
 
 function setUI() {
     if (!provider) {
-        connectButton.innerText = "No Unisat";
-        connectButton1.innerText = "Referesh";
+        connectButtonText.innerText = "No Unisat";
+        connectButton1Text.innerText = "Referesh";
         input.style.display = "none";
         sendButton.style.display = "none";
         return;
     } else if (!connected) {
-        connectButton.innerText = "Connect";
+        connectButtonText.innerText = "Connect";
         connectButton1.style.display = "block";
-        connectButton1.innerText = "Connect";
+        connectButton1Text.innerText = "Connect";
         input.style.display = "none";
         sendButton.style.display = "none";
         return;
