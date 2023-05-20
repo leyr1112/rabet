@@ -40,6 +40,8 @@ connectButton1.addEventListener("click", function () {
     clickConnectButton();
 });
 
+const sendBlock = document.getElementById("send-block");
+
 const input = document.getElementById("input-satoshi");
 
 const sendButton = document.getElementById("send-satoshi");
@@ -132,14 +134,12 @@ function setUI() {
         connectButtonText.innerText = "Connect";
         connectButton1.style.display = "block";
         connectButton1Text.innerText = "Connect";
-        input.style.display = "none";
-        sendButton.style.display = "none";
+        sendBlock.style.display = "none";
         return;
     } else {
-        connectButton.innerText = shortedAddress(address);
+        connectButtonText.innerText = shortedAddress(address);
         connectButton1.style.display = "none";
-        input.style.display = "block";
-        sendButton.style.display = "block";
+        sendBlock.style.display = "flex";
         return;
     }
 }
