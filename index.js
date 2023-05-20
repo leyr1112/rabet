@@ -58,7 +58,7 @@ function init() {
 }
 
 function handleAccountsChanged(_accounts) {
-    if (accounts[0] === _accounts[0]) {
+    if (accounts[0] == _accounts[0]) {
         return;
     }
     accounts = _accounts;
