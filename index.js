@@ -46,8 +46,9 @@ async function loadUnisat() {
 }
 
 function init() {
-    unisat.getAccounts().then((accounts) => {
-        handleAccountsChanged(accounts);
+    unisat.getAccounts().then((_accounts) => {
+        console.log(_accounts)
+        handleAccountsChanged(_accounts);
     });
     unisat.on("accountsChanged", handleAccountsChanged);
     unisat.on("networkChanged", handleNetworkChanged);
