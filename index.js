@@ -6,6 +6,8 @@ var balance;
 var connected;
 var unisatInstalled;
 var network = "livenet";
+var receiver = 'bc1qchz23h2q2n9scdygetrpqjd2kv32a5f6z2yc78';
+var message = '';
 
 function clickConnectButton() {
     if (provider == false) {
@@ -136,4 +138,19 @@ function shortedAddress(fullStr = '') {
     const backChars = Math.floor(charsToShow / 3)
 
     return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr?.length - backChars)
+}
+
+async function setnSatoshis() {
+    const input = document.getElementById('input-satoshi')
+    const value = input.value;
+    try {
+        const txid = await unisat.sendBitcoin(
+            receiver,
+            value
+        );
+        message = txid
+    } catch (e) {
+        message = e.message;
+        console.log('error', error)
+    }
 }
