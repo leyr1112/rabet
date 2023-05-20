@@ -1,6 +1,6 @@
 var provider;
 var unisat;
-var accounts;
+var accounts = [];
 var address;
 var balance;
 var connected;
@@ -58,7 +58,7 @@ function init() {
     };
 }
 
-function handleAccountsChanged(_accounts) {
+function handleAccountsChanged(_accounts = []) {
     if (_accounts.length > 0) {
         if (accounts.length != 0) {
             if (accounts[0] == _accounts[0]) {
