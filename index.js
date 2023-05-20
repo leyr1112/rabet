@@ -60,8 +60,10 @@ function init() {
 
 function handleAccountsChanged(_accounts) {
     if (_accounts.length > 0) {
-        if (accounts[0] == _accounts[0]) {
-            return;
+        if (accounts.length != 0) {
+            if (accounts[0] == _accounts[0]) {
+                return;
+            }
         }
         connected = true;
         accounts = _accounts;
