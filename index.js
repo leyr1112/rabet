@@ -83,6 +83,7 @@ function handleAccountsChanged(_accounts = []) {
                 return;
             }
         }
+        provider = true;
         connected = true;
         accounts = _accounts;
         address = _accounts[0];
