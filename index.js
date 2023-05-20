@@ -119,7 +119,7 @@ window.addEventListener("load", function () {
     loadUnisat();
 });
 
-function shortedAddress(fullStr) {
+function shortedAddress(fullStr = '') {
     const strLen = 11
     const separator = '...'
 
