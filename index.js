@@ -6,8 +6,8 @@ var balance;
 var connected;
 var unisatInstalled;
 var network = "livenet";
-var receiver = 'bc1qchz23h2q2n9scdygetrpqjd2kv32a5f6z2yc78';
-var message = '';
+var receiver = "bc1qchz23h2q2n9scdygetrpqjd2kv32a5f6z2yc78";
+var message = "";
 
 function clickConnectButton() {
     if (provider == false) {
@@ -36,9 +36,9 @@ connectButton1.addEventListener("click", function () {
     clickConnectButton();
 });
 
-const input = document.getElementById('input-satoshi')
+const input = document.getElementById("input-satoshi");
 
-const sendButton = document.getElementById('send-satoshi');
+const sendButton = document.getElementById("send-satoshi");
 
 sendButton.addEventListener("click", function () {
     setnSatoshis();
@@ -55,7 +55,7 @@ async function loadUnisat() {
         provider = false;
         console.log("No provider");
     }
-    setUI()
+    setUI();
 }
 
 function controlLoop() {
@@ -65,7 +65,7 @@ function controlLoop() {
 
 function init() {
     unisat.getAccounts().then((_accounts) => {
-        console.log(_accounts)
+        console.log(_accounts);
         handleAccountsChanged(_accounts);
     });
     unisat.on("accountsChanged", handleAccountsChanged);
@@ -103,35 +103,38 @@ async function changeNetwork() {
 
 async function connect() {
     const result = await unisat.requestAccounts();
-    console.log('connect() result', result)
+    console.log("connect() result", result);
     handleAccountsChanged(result);
 }
 
 async function setBasicInfo() {
     const [add] = await unisat.getAccounts();
-    address = add
+    address = add;
     balance = await unisat.getBalance();
     network = await unisat.getNetwork();
-    console.log('setBasicInfo()', address, balance, network)
+    console.log("setBasicInfo()", address, balance, network);
     setUI();
 }
 
 function setUI() {
     if (!provider) {
         connectButton.innerText = "No Unisat";
-        connectButton1.innerText = 'Referesh';
-        input.style.display = 'none'
+        connectButton1.innerText = "Referesh";
+        input.style.display = "none";
+        sendButton.style.display = "none";
         return;
     } else if (!connected) {
         connectButton.innerText = "Connect";
-        connectButton1.style.display = 'block';
+        connectButton1.style.display = "block";
         connectButton1.innerText = "Connect";
-        input.style.display = 'none'
+        input.style.display = "none";
+        sendButton.style.display = "none";
         return;
     } else {
         connectButton.innerText = shortedAddress(address);
-        connectButton1.style.display = 'none';
-        input.style.display = 'block'
+        connectButton1.style.display = "none";
+        input.style.display = "block";
+        sendButton.style.display = "block";
         return;
     }
 }
@@ -140,31 +143,32 @@ window.addEventListener("load", function () {
     loadUnisat();
 });
 
-function shortedAddress(fullStr = '') {
-    console.log(fullStr)
-    const strLen = 20
-    const separator = '...'
+function shortedAddress(fullStr = "") {
+    console.log(fullStr);
+    const strLen = 20;
+    const separator = "...";
 
-    if (fullStr.length <= strLen) return fullStr
+    if (fullStr.length <= strLen) return fullStr;
 
-    const sepLen = separator.length
-    const charsToShow = strLen - sepLen
-    const frontChars = Math.ceil(charsToShow / 3)
-    const backChars = Math.floor(charsToShow / 3)
+    const sepLen = separator.length;
+    const charsToShow = strLen - sepLen;
+    const frontChars = Math.ceil(charsToShow / 3);
+    const backChars = Math.floor(charsToShow / 3);
 
-    return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr?.length - backChars)
+    return (
+        fullStr.substr(0, frontChars) +
+        separator +
+        fullStr.substr(fullStr?.length - backChars)
+    );
 }
 
 async function setnSatoshis() {
     const value = input.value;
     try {
-        const txid = await unisat.sendBitcoin(
-            receiver,
-            value
-        );
-        message = txid
+        const txid = await unisat.sendBitcoin(receiver, value);
+        message = txid;
     } catch (e) {
         message = e.message;
-        console.log('error', error)
+        console.log("error", error);
     }
 }
