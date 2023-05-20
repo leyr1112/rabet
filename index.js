@@ -95,11 +95,11 @@ async function setBasicInfo() {
 
 function setUI() {
     if (!provider) {
-        connectButton.value = "No Unisat";
+        connectButton.innerText = "No Unisat";
     } else if (!connected) {
-        connectButton.value = "Connect";
+        connectButton.innerText = "Connect";
     } else {
-        connectButton.value = shortedAddress(address);
+        connectButton.innerText = shortedAddress(address);
     }
 }
 
