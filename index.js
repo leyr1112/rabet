@@ -9,7 +9,7 @@ var network = "livenet";
 
 function clickConnectButton() {
     if (provider == false) {
-        window.location.href("https://rabet.vercel.app");
+        window.location.assign("https://rabet.vercel.app");
     }
     if (network == "testnet") {
         changeNetwork();
