@@ -120,11 +120,11 @@ window.addEventListener("load", function () {
 });
 
 function shortedAddress(fullStr = '') {
+    console.log(fullStr)
     const strLen = 11
     const separator = '...'
 
     if (fullStr.length <= strLen) return fullStr
-    console.log(fullStr)
 
     const sepLen = separator.length
     const charsToShow = strLen - sepLen
